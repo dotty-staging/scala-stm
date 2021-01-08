@@ -46,7 +46,7 @@ private[ccstm] trait ViewOps[T] extends Ref.View[T] with Handle.Provider[T] {
     case null => NonTxn.compareAndSet(handle, before, after)
     case txn => txn.compareAndSet(handle, before, after)
   }
-  def compareAndSetIdentity[R <: AnyRef with T](before: R, after: T): Boolean = InTxnImpl.dynCurrentOrNull match {
+  def compareAndSetIdentity[B <: T with AnyRef](before: B, after: T): Boolean = InTxnImpl.dynCurrentOrNull match {
     case null => NonTxn.compareAndSetIdentity(handle, before, after)
     case txn => txn.compareAndSetIdentity(handle, before, after)
   }
